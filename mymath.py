@@ -1,4 +1,12 @@
 import time
+def timer(func):
+    def wrapper(*args,**kwargs):
+        start = time.time()
+        result = func(*args)
+        end = time.time()
+        print(f"time elapsed : {end - start}")
+        return result
+    return wrapper
 # def factorial(number) -> int :
 #     """
 #     factorial by repititon
@@ -21,16 +29,14 @@ def factorial(number) -> int:
     else:
         return number * factorial(number -1)
 
-def nCr(n,r) -> int :
+@timer
+def nCr(n,r) -> int : #SRP, 0CP violation
     """
     조합 함수
     :param n:
     :param r:
     :return:
     """
-    start = time.time()
     numerator = factorial(n)
     denominator = factorial(n-r) * factorial(r)
-    end = time.time()
-    print(f"소요 시간{end - start}")
     return int(numerator / denominator)
