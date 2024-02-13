@@ -15,9 +15,16 @@ def pop():
     top -= 1
     return data
 
+def peek():
+    global SIZE, stack, top
+    if is_stack_empty():
+        print("스택이 비었습니다")
+        return
+    return stack[top]
+
 SIZE = 5
-stack = ["커피", None, None, None, None]
-top = 0
+stack = ["커피", "사이다", "아이스티", "흑당버블밀크티", None]
+top = 3
 
 print(stack)
 retData = pop()
