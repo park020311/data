@@ -1,80 +1,72 @@
-import webbrowser
-import time
+## 함수 선언 부분 ##
+def is_queue_full() :
+	global SIZE, queue, front, rear
+	if rear != SIZE - 1:
+		return False
+	elif rear == SIZE - 1 and front == -1:
+		return True
+	else:
+		for i in range(front + 1, SIZE):
+			queue[i - 1] = queue[i]
+			queue[i] = None
+		front = front - 1
+		rear = rear - 1
+		return False
+def is_queue_empty() :
+	global SIZE, queue, front, rear
+	if front == rear:
+		return True
+	else:
+		return False
 
+def en_queue(data) :
+	global SIZE, queue, front, rear
+	if is_queue_full():
+		print("큐가 꽉 찼습니다.")
+		return
+	rear += 1
+	queue[rear] = data
 
-def is_stack_full():
-    global SIZE, stack, top
-    if top >= SIZE-1:
-        return True
-    else :
-        return False
-
-def is_stack_empty():
-    global SIZE, stack, top
-    if top == -1:
-        return True
-    else :
-        return False
-
-def push(data):
-    global SIZE, stack, top
-    if is_stack_full():
-        print("스택이 꽉 찼습니다.")
-        return
-    top += 1
-    stack[top] = data
-
-def pop():
-    global SIZE, stack, top
-    if is_stack_empty() :
-        print("스택이 비었습니다.")
-        return None
-    data = stack[top]
-    stack[top] = None
-    top -= 1
-    return data
+def de_queue() :
+	global SIZE, queue, front, rear
+	if is_queue_empty():
+		print("큐가 비었습니다.")
+		return None
+	front += 1
+	data = queue[front]
+	queue[front] = None
+	return data
 
 def peek():
-    global SIZE, stack, top
-    if is_stack_empty():
-        print("스택이 비었습니다.")
-        return None
-    return stack[top]
+	global SIZE, queue, front, rear
+	if is_queue_empty():
+		print("큐가 비었습니다.")
+		return None
+	return queue[front+1]
 
-def check_bracket(expr):
-    for ch in expr:
-        if ch in '([{<':
-            push(ch)
-        elif ch in ')]}>':
-            out = pop()
-            if ch == ')' and out == '(':
-                pass
-            elif ch == ']' and out == '[':
-                pass
-            elif ch == '}' and out == '{':
-                pass
-            elif ch == '>' and out == '<':
-                pass
-            else:
-                return False
-        else:
-            pass
-    if is_stack_empty():
-        return True
-    else:
-        return False
+SIZE = int(input("큐의 크기를 입력하세요 ==> "))
+queue = [ None for _ in range(SIZE) ]
+front = rear = -1
 
+if __name__ == "__main__" :
 
-SIZE = 100
-stack = [None for _ in range(SIZE)]
-top = -1
+	while True:
+		menu = input("삽입(I)/추출(E)/확인(V)/종료(X) 중 하나를 선택 ==> ")
+		if menu == 'X' or menu == 'x':
+			break
+		elif menu == 'I' or menu == 'i':
+			data = input("입력할 데이터 ==> ")
+			en_queue(data)
+			print("큐 상태 : ", queue)
+		elif menu == 'E' or menu == 'e':
+			data = de_queue()
+			print("추출된 데이터 ==> ", data)
+			print("큐 상태 : ", queue)
+		elif menu == 'V' or menu == 'v':
+			data = peek()
+			print("확인된 데이터 ==> ", data)
+			print("큐 상태 : ", queue)
+		else:
+			print("입력이 잘못됨")
 
-
-if __name__ == "__main__":
-    urls = ['naver.com', 'daum.net', 'nate.com']
-
-    exprAry = ['(A+B)', ')A+B(', '((A+B)-C', '(A+B]', '(<A+{B-C}/[C*D]>)']
-
-    for expr in exprAry:
-        top = -1
-        print(expr, '==>', check_bracket(expr))
+	print("프로그램 종료!")
