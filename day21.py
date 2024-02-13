@@ -1,23 +1,27 @@
-def is_stack_full():
+def is_stack_empty():
     global SIZE, stack, top
-    if top >= SIZE-1:
+    if top == -1:
         return True
     else:
         return False
 
-def push(data) :
+def pop():
     global SIZE, stack, top
-    if is_stack_full() :
-        print("스택이 꽉 찼습니다.")
-        return
-    top += 1
-    stack[top] = data
+    if is_stack_empty():
+        print("스택이 비었습니다.")
+        return None
+    data = stack[top]
+    stack[top] = None
+    top -= 1
+    return data
 
 SIZE = 5
-stack = ["커피", "녹차", "꿀물", "콜라", None]
-top = 3
+stack = ["커피", None, None, None, None]
+top = 0
 
 print(stack)
-push("환타")
+retData = pop()
+print("추출한 데이터 -->", retData)
 print(stack)
-push("게토레이")
+retData = pop()
+print("추출한 데이터 -->", retData)
