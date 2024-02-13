@@ -1,3 +1,6 @@
+import random
+
+## 클래스와 함수 선언 부분 ##
 class Node() :
     def __init__ (self) :
         self.data = None
@@ -5,116 +8,74 @@ class Node() :
 
 def print_nodes(start):
     current = start
-    if current.link is None :
+    if current.link is None:
         return
     print(current.data, end=' ')
-    while current.link != start:
+    while current.link is not start:
         current = current.link
         print(current.data, end=' ')
     print()
 
-def insert_node(find_data, insert_data) :
+def  count_odd_even() :
     global head, current, pre
 
-    if head.data is find_data :
-        node = Node()
-        node.data = insert_data
-        node.link = head
-        last = head
-        while last.link is not head :
-            last = last.link
-        last.link = node
-        head = node
-        return
+    odd, even = 0, 0
+    if head is None :
+        return False
 
     current = head
-
-    while current.link is not head :
-        pre = current
+    while True:
+        if current.data % 2 == 0:
+            even += 1
+        else :
+            odd += 1
+        if current.link is not head :
+            break
         current = current.link
-        if current.data is find_data :
-            node = Node()
-            node.data = insert_data
-            node.link = current
-            pre.link = node
-            return
 
-    node = Node()
-    node.data = insert_data
-    current.link = node
-    node.link = head
+    return odd, even
 
-def delete_node(delete_data) :
+def make_zero_number(odd, even):
 
-    global head, current, pre
-
-    if head.data == delete_data:
-        current = head
-        head = head.link
-        last = head
-        while last.link != current:
-            last = last.link
-        last.link = head
-        del (current)
-        return
+    if odd > even :
+        reminder = 1
+    else :
+        reminder = 0
 
     current = head
-    while current.link is not head:
-        pre = current
+    while True:
+        if current.data % 2 is reminder:
+            current.data *= -1
+        if current.link is head :
+            break
         current = current.link
-        if current.data == delete_data:
-            pre.link = current.link
-            del (current)
-            return
 
-def find_node(find_data) :
-    global head, current, pre
-
-    current = head
-    if current.data == find_data:
-        return current
-    while current.link is not head:
-        current = current.link
-        if current.data is find_data:
-            return current
-    return Node()
 
 head, current, pre = None, None, None
-dataArray = ["다현", "정연", "쯔위", "사나", "지효"]
 
-if __name__ == "__main__" :
+
+if __name__ == "__main__":
+
+    data_array = [random.randint(1, 100) for _ in range(7)]
 
     node = Node()
-    node.data = dataArray[0]
+    node.data = data_array[0]
     head = node
     node.link = head
 
 
-    for data in dataArray[1:] :
+    for data in data_array[1:] :
         pre = node
         node = Node()
         node.data = data
         pre.link = node
         node.link = head
 
+
     print_nodes(head)
 
-    insert_node("다현", "화사")
+    oddCount, evenCount = count_odd_even()
+    print('홀수 -->', oddCount, '\t', '짝수 -->', evenCount)
+
+    make_zero_number(oddCount, evenCount)
     print_nodes(head)
-
-    insert_node("사나", "솔라")
-    print_nodes(head)
-
-    insert_node("재남", "문별")
-    print_nodes(head)
-
-    delete_node("화사")
-    print_nodes(head)
-
-    delete_node("솔라")
-    print_nodes(head)
-
-    print(find_node("쯔위"))
-
-
-
