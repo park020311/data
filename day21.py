@@ -1,51 +1,75 @@
 class Node() :
-	def __init__ (self) :
-		self.data = None
-		self.link = None
+    def __init__ (self) :
+        self.data = None
+        self.link = None
 
 def print_nodes(start):
-	current = start
-	if current is None:
-		return
-	print(current.data, end=' ')
-	while current.link is not None:
-		current = current.link
-		print(current.data, end=' ')
-	print()
+    current = start
+    if current.link is None :
+        return
+    print(current.data, end=' ')
+    while current.link != start:
+        current = current.link
+        print(current.data, end=' ')
+    print()
 
-def make_simple_linked_list(height):
-	global head, current, pre
-	print_nodes(head)
+def insert_node(findData, insertData) :
+    global memory, head, current, pre
 
-	node = Node()
-	node.data = height
-	if head is None:
-		head = node
-		return
+    if head.data is findData :
+        node = Node()
+        node.data = insertData
+        node.link = head
+        last = head
+        while last.link is not head :
+            last = last.link
+        last.link = node
+        head = node
+        return
 
-	if head.data[1] > height[1]:
-		node.link = head
-		head = node
-		return
+    current = head
 
+    while current.link is not head :
+        pre = current
+        current = current.link
+        if current.data is findData :
+            node = Node()
+            node.data = insertData
+            node.link = current
+            pre.link = node
+            return
 
-	current = head
-	while current.link is not None:
-		pre = current
-		current = current.link
-		if current.data[1] > height[1]:
-			pre.link = node
-			node.link = current
-			return
+    node = Node()
+    node.data = insertData
+    current.link = node
+    node.link = head
 
-	current.link = node
 
 head, current, pre = None, None, None
-data_array = [["지민", "180"], ["정국", "177"], ["뷔", "183"], ["슈가", "175"], ["진", "179"]]
+dataArray = ["다현", "정연", "쯔위", "사나", "지효"]
 
-if __name__ == "__main__":
+if __name__ == "__main__" :
 
-	for data in data_array:
-		make_simple_linked_list(data)
+    node = Node()
+    node.data = dataArray[0]
+    head = node
+    node.link = head
 
-	print_nodes(head)
+
+    for data in dataArray[1:] :
+        pre = node
+        node = Node()
+        node.data = data
+        pre.link = node
+        node.link = head
+
+    print_nodes(head)
+
+    insert_node("다현", "화사")
+    print_nodes(head)
+
+    insert_node("사나", "솔라")
+    print_nodes(head)
+
+    insert_node("재남", "문별")
+    print_nodes(head)
