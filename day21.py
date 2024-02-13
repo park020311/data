@@ -13,17 +13,17 @@ def print_nodes(start):
 		print(current.data, end=' ')
 	print()
 
-def make_simple_linked_list(name_phone):
+def make_simple_linked_list(height):
 	global head, current, pre
 	print_nodes(head)
 
 	node = Node()
-	node.data = name_phone
+	node.data = height
 	if head is None:
 		head = node
 		return
 
-	if head.data[0] > name_phone[0]:
+	if head.data[1] > height[1]:
 		node.link = head
 		head = node
 		return
@@ -33,7 +33,7 @@ def make_simple_linked_list(name_phone):
 	while current.link is not None:
 		pre = current
 		current = current.link
-		if current.data[0] > name_phone[0]:
+		if current.data[1] > height[1]:
 			pre.link = node
 			node.link = current
 			return
@@ -41,7 +41,7 @@ def make_simple_linked_list(name_phone):
 	current.link = node
 
 head, current, pre = None, None, None
-data_array = [["지민", "010-1111-1111"], ["정국", "010-2222-2222"], ["뷔", "010-3333-3333"], ["슈가", "010-4444-4444"], ["진", "010-5555-5555"]]
+data_array = [["지민", "180"], ["정국", "177"], ["뷔", "183"], ["슈가", "175"], ["진", "179"]]
 
 if __name__ == "__main__":
 
