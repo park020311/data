@@ -1,78 +1,23 @@
-import random
-
-class Node() :
-    def __init__(self):
-        self.data = None
-        self.link = None
-
-def print_nodes(start):
-    current = start
-    if current.link is None :
-        return
-    print(current.data, end=' ')
-    while current.link is not start:
-        current = current.link
-        print(current.data, end=' ')
-    print()
-
-def  count_odd_even():
-    global head, current, pre
-
-    odd, even = 0, 0
-    if head is None:
+def is_stack_full():
+    global SIZE, stack, top
+    if top >= SIZE-1:
+        return True
+    else:
         return False
 
-    current = head
-    while True:
-        if current.data % 2 == 0:
-            even += 1
-        else:
-            odd += 1
-        if current.link is head:
-            break
-        current = current.link
+def push(data) :
+    global SIZE, stack, top
+    if is_stack_full() :
+        print("스택이 꽉 찼습니다.")
+        return
+    top += 1
+    stack[top] = data
 
-    return odd, even
+SIZE = 5
+stack = ["커피", "녹차", "꿀물", "콜라", None]
+top = 3
 
-def make_minus_number(odd, even):
-    if odd > even:
-        reminder = 1
-    else:
-        reminder = 0
-
-    current = head
-    while True:
-        if current.data % 2 == reminder:
-            current.data *= -1
-        if current.link is head:
-            break
-        current = current.link
-
-
-head, current, pre = None, None, None
-
-
-if __name__ == "__main__" :
-
-    data_array = [random.randint(1, 100) for _ in range(7)]
-
-    node = Node()
-    node.data = data_array[0]
-    head = node
-    node.link = head
-
-
-    for data in data_array[1:] :
-        pre = node
-        node = Node()
-        node.data = data
-        pre.link = node
-        node.link = head
-
-    print_nodes(head)
-
-    oddCount, evenCount = count_odd_even()
-    print('홀수 -->', oddCount, '\t', '짝수 -->', evenCount)
-
-    make_minus_number(oddCount, evenCount)
-    print_nodes(head)
+print(stack)
+push("환타")
+print(stack)
+push("게토레이")
