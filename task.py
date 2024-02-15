@@ -1,55 +1,29 @@
-class Node() :
-    def __init__ (self) :
+import random
+class Node():
+    def __init__(self):
         self.data = None
         self.link = None
 
-def print_nodes(start) :
-    current = start
-    if current is None :
-        return
-    print(current.data, end = ' ')
-    while current.link is not None:
-        current = current.link
-        print(current.data, end = ' ')
-    print()
 
-def make_simple_linked_list(email_) :
-    global head, current, pre
-    print_nodes(head)
-
-    node = Node()
-    node.data = email_
-
-    if head == None :
-        head = node
-        return
-
-    if head.data[1] > email_[1]:
-        node.link = head
-        head = node
-        return
-
-
+def linked_list(rand):
+    head = Node()
+    head.data = rand[0]
     current = head
-    while current.link != None:
-        pre = current
-        current = current.link
-        if current.data[1] > email_[1]:
-            pre.link = node
-            node.link = current
-            return
+
+    for num in rand[1:]:
+        node = Node()
+        node.data = num
+        current.link = node
+        current = node
+
+    return head
+    
+if __name__ == "__main__":
+    Lotto = [random.randint(1,45)for i in range(6)]
+    head = linked_list(Lotto)
+
+    while head:
+        print(head.data)
+        head = head.link
 
 
-    current.link = node
-
-
-head, current, pre = None, None, None
-dataArray = [["혜리", "herry@girls.com"], ["유라", "youra@girls.com"],["소진","sojin@girls.com"],["방민아","bma@girls.com"]]
-
-
-if __name__ == "__main__" :
-
-    for data in dataArray :
-        make_simple_linked_list(data)
-
-    print_nodes(head)
