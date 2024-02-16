@@ -1,36 +1,44 @@
+import random
+class Node():
+    def __init__(self):
+        self.data = None
+        self.link = None
 
-def print_poly(t_x, p_x):
-    poly_str = "P(x) = "
+def distance_store(store_data):
+    dis = ((store_data[1]**2) + (store_data[2]**2))**0.5
+    return dis
 
-    for i in range(len(p_x)):
-        term = t_x[i][0]
-        coef = p_x[i][0]
-
-        if (coef >= 0):
-            poly_str += "+"
-        poly_str += str(coef) + "x^" + str(term) + " "
-
-    return poly_str
-
-
-def calc_poly(xVal, t_x, p_x):
-    ret_value = 0
-
-    for i in range(len(px)):
-        term = t_x[i][0]
-        coef = p_x[i][0]
-        ret_value += coef * x_value ** term
-
-    return ret_value
-
-tx = [[300], [20], [0]]
-px = [[7], [-4], [5]]
+def add_node(start,data):
+    new_node = Node()
+    new_node.data = data
+    if start is None:
+        new_node.link = new_node
+        return new_node
+    else:
+        current = start
+        while current.link != start:
+            current = current.link
+        current.link = new_node
+        new_node.link = start
+        return start
+def print_nodes(start):
+    current = start
+    while True:
+        print(current.data, end='')
+        current = current.link
+        if current == start:
+            break
+        print()
 
 if __name__ == "__main__":
-    p_str = print_poly(tx, px)
-    print(p_str)
-
-    x_value = int(input("X 값-->"))
-
-    px_value = calc_poly(x_value, tx, px)
-    print(px_value)
+    stores = []
+    for i in "abcdefghij":
+        x=random.randint(1, 100)
+        y=random.randint(1,100)
+        store = (i,x,y)
+        stores.append(store)
+    stores.sort(key=distance_store)
+    head = None
+    for store in stores:
+        head = add_node(head,store)
+    print_nodes(head)
