@@ -1,19 +1,36 @@
-class Node():
-    def __init__(self):
-        self.data = None
-        self.link = None
 
-def add_data(katok_list,new):
-    kLen = len(katok_list)
-    index = 0
-    count = new[1]
-    while index < kLen and katok_list[index][1]>count:
-        index = index + 1
+def print_poly(t_x, p_x):
+    poly_str = "P(x) = "
 
-    katok_list.insert(index,new)
+    for i in range(len(p_x)):
+        term = t_x[i][0]
+        coef = p_x[i][0]
 
-katok = [('다현',200),("정연",150),('쯔위',90),('사나',30),('지효',15)]
+        if (coef >= 0):
+            poly_str += "+"
+        poly_str += str(coef) + "x^" + str(term) + " "
+
+    return poly_str
+
+
+def calc_poly(xVal, t_x, p_x):
+    ret_value = 0
+
+    for i in range(len(px)):
+        term = t_x[i][0]
+        coef = p_x[i][0]
+        ret_value += coef * x_value ** term
+
+    return ret_value
+
+tx = [[300], [20], [0]]
+px = [[7], [-4], [5]]
 
 if __name__ == "__main__":
-    add_data(katok,('미나',40))
-    print(katok)
+    p_str = print_poly(tx, px)
+    print(p_str)
+
+    x_value = int(input("X 값-->"))
+
+    px_value = calc_poly(x_value, tx, px)
+    print(px_value)
