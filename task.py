@@ -1,29 +1,19 @@
-import random
 class Node():
     def __init__(self):
         self.data = None
         self.link = None
 
+def add_data(katok_list,new):
+    kLen = len(katok_list)
+    index = 0
+    count = new[1]
+    while index < kLen and katok_list[index][1]>count:
+        index = index + 1
 
-def linked_list(rand):
-    head = Node()
-    head.data = rand[0]
-    current = head
+    katok_list.insert(index,new)
 
-    for num in rand[1:]:
-        node = Node()
-        node.data = num
-        current.link = node
-        current = node
+katok = [('다현',200),("정연",150),('쯔위',90),('사나',30),('지효',15)]
 
-    return head
-    
 if __name__ == "__main__":
-    Lotto = [random.randint(1,45)for i in range(6)]
-    head = linked_list(Lotto)
-
-    while head:
-        print(head.data)
-        head = head.link
-
-
+    add_data(katok,('미나',40))
+    print(katok)
